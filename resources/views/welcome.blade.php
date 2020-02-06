@@ -11,6 +11,41 @@
 
         <!-- Styles -->
         <style>
+            * {
+              box-sizing: border-box;
+            }
+
+            #myInput {
+              background-image: url('/css/searchicon.png');
+              background-position: 10px 10px;
+              background-repeat: no-repeat;
+              width: 100%;
+              font-size: 16px;
+              padding: 12px 20px 12px 40px;
+              border: 1px solid #ddd;
+              margin-bottom: 12px;
+            }
+
+            #myTable {
+              border-collapse: collapse;
+              width: 100%;
+              border: 1px solid #ddd;
+              font-size: 18px;
+            }
+
+            #myTable th, #myTable td {
+              text-align: left;
+              padding: 12px;
+            }
+
+            #myTable tr {
+              border-bottom: 1px solid #ddd;
+            }
+
+            #myTable tr.header, #myTable tr:hover {
+              background-color: #f1f1f1;
+            }
+
             html, body {
                 background-color: #fff;
                 color: #636b6f;
@@ -81,19 +116,28 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    last 50 sent messages 
                 </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+                <table id="myTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="th-sm">Text</th>
+                            <th class="th-sm">Status</th>
+                            <th class="th-sm">Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($messages as $message)
+                            <tr>
+                                <td>{{ $message->text }}</td>
+                                <td>{{ $message->status }}</td>
+                                <td>{{ $message->created_at }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
             </div>
         </div>
     </body>
