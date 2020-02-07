@@ -7,6 +7,7 @@ use App\Message;
 use App\Restaurant;
 use Carbon\Carbon;
 use App\Jobs\SendNotifications;
+use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
@@ -15,15 +16,20 @@ class NotificationController extends Controller
      *
      * @return \Illuminate\Http\Response
    	 */
-	public function index()
+	public function index(Request $request)
 	{
 		$messages = Message::limit(50)
 			->orderBy('created_at', 'ASC')
 			->get();
 
 		$notDelivedMessages = Message::where('status', '<>', Message::$deliveredStatus)
-			->where('created_at', '>=', Carbon::now()->subDay())
-			->get();
+			->where('created_at', '>=', Carbon::now()->subDay());
+
+		if ($request->has('text')) {
+			$notDelivedMessages->where('text', 'like', '%' . $request->get('text') . '%');
+		}
+
+		$notDelivedMessages = $notDelivedMessages->get();
 
 		return view('welcome', compact('messages', 'notDelivedMessages'));
 	}

@@ -115,6 +115,16 @@
             @endif
 
             <div class="content">
+                <div class="row">
+                    <form method="get" class="form-inline" action="{{ route('get_notification') }}">
+                        <div class="form-group">
+                            <input type="text" value="{{ request()->get('text') ?? null }}" name="text" class="form-control" placeholder="Enter Text">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </form>
+                </div>
                 <div class="title m-b-md">
                     Not delivered messaged in the last 24 hours
                 </div>
