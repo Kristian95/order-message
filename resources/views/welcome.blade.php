@@ -116,6 +116,30 @@
 
             <div class="content">
                 <div class="title m-b-md">
+                    Not delivered messaged in the last 24 hours
+                </div>
+
+                <table id="myTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="th-sm">Text</th>
+                            <th class="th-sm">Status</th>
+                            <th class="th-sm">Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($notDelivedMessages as $message)
+                            <tr>
+                                <td>{{ $message->text }}</td>
+                                <td>{{ $message->status }}</td>
+                                <td>{{ $message->created_at }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+
+                <div class="title m-b-md">
                     last 50 sent messages 
                 </div>
 

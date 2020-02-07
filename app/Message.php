@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
+    public static $deliveredStatus = 0;
+
     /**
      * The database table used by the model.
      *
