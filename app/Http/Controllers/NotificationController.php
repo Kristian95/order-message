@@ -35,5 +35,7 @@ class NotificationController extends Controller
 	public function send()
 	{
 		(new SendSMSNotificationService())->send();
+
+		return redirect()->route('get_notification');;
 	}
 }

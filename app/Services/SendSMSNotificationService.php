@@ -14,7 +14,7 @@ class SendSMSNotificationService
 
 	public function send()
 	{
-		$message = 'Order from restaurant' . self::$restaurant['name'] . 'delivery time' . self::$restaurant['delivery_time'] . ' mins';
+		$message = 'Order from restaurant ' . self::$restaurant['name'] . 'delivery time ' . self::$restaurant['delivery_time'] . ' mins';
 
 		$notifaction = Nexmo::message()->send([
 		    'to'   => '14845551244',
