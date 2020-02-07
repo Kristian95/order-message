@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Services\SendSMSNotificationService;
 use App\Message;
 use Carbon\Carbon;
+use App\Jobs\SendNotifications;
 
 class NotificationController extends Controller
 {
@@ -34,7 +34,7 @@ class NotificationController extends Controller
      */
 	public function send()
 	{
-		(new SendSMSNotificationService())->send();
+		dispatch(new SendNotifications());
 
 		return redirect()->route('get_notification');;
 	}
