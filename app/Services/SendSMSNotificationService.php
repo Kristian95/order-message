@@ -3,17 +3,18 @@
 namespace App\Services;
 
 use App\Message;
+use Nexmo\Laravel\Facade\Nexmo;
 
 class SendSMSNotificationService
 {
-	private $restourant = [
+	private static $restaurant = [
 		'name' => 'La Scara',
-		'delivery_time' => 50;
+		'delivery_time' => 50,
 	];
 
 	public function send()
 	{
-		$message = "Order from restourant {self::$restourant['name']} delivery time {self::$restourant['delivery_time']} mins";
+		$message = 'Order from restaurant' . self::$restaurant['name'] . 'delivery time' . self::$restaurant['delivery_time'] . ' mins';
 
 		$notifaction = Nexmo::message()->send([
 		    'to'   => '14845551244',
@@ -21,14 +22,17 @@ class SendSMSNotificationService
 		    'text' => $message,
 		]);
 
-		$this->storeInDb($message, $notifaction->getStatus());
+		$response = $notifaction->getResponseData();
+		$status = $response['messages'][0]['status'];
+
+		$this->storeInDb($message, $status);
 	}
 
 	private function storeInDb(string $message, int $status)
 	{
 		Message::create([
 			'text' => $message,
-			'status' => $notifaction->getStatus();
+			'status' => $status,
 		]);
 	}
 }

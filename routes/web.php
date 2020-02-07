@@ -11,5 +11,5 @@
 |
 */
 
-Route::post('notification', ['as' => 'notification', 'uses' => 'NotificationController@send']);
+Route::get('notification', ['as' => 'notification', 'uses' => 'NotificationController@send']);
 Route::get('/', ['as' => 'get_notification', 'uses' => 'NotificationController@index']);
