@@ -13,14 +13,15 @@ class SendNotifications implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    private $message;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($message)
     {
-        //
+        $this->message = $message;
     }
 
     /**
@@ -30,6 +31,6 @@ class SendNotifications implements ShouldQueue
      */
     public function handle()
     {
-        (new SendSMSNotificationService())->send();
+        (new SendSMSNotificationService($this->message))->send();
     }
 }

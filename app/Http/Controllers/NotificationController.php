@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Message;
+use App\Restaurant;
 use Carbon\Carbon;
 use App\Jobs\SendNotifications;
 
@@ -34,8 +35,14 @@ class NotificationController extends Controller
      */
 	public function send()
 	{
-		dispatch(new SendNotifications());
+		$notificationMessage = (new Restaurant())->getMessage();
+		$messageAfterDelivery = (new Restaurant())->getMessageAfterDelivery();
 
-		return redirect()->route('get_notification');;
+		dispatch(new SendNotifications($notificationMessage));
+
+		// message 90 minutes after delivery time
+		dispatch(new SendNotifications($messageAfterDelivery))->delay(now()->addMinutes(Restaurant::DELIVERY_TIME + 90));
+
+		return redirect()->route('get_notification');
 	}
 }
