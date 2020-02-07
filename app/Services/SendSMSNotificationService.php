@@ -3,18 +3,14 @@
 namespace App\Services;
 
 use App\Message;
+use App\Restaurant;
 use Nexmo\Laravel\Facade\Nexmo;
 
 class SendSMSNotificationService
 {
-	private static $restaurant = [
-		'name' => 'La Scara',
-		'delivery_time' => 50,
-	];
-
 	public function send()
 	{
-		$message = 'Order from restaurant ' . self::$restaurant['name'] . 'delivery time ' . self::$restaurant['delivery_time'] . ' mins';
+		$message = 'Order from restaurant ' . Restaurant::NAME . 'delivery time ' . Restaurant::DELIVERY_TIME . ' mins';
 
 		$notifaction = Nexmo::message()->send([
 		    'to'   => '14845551244',
