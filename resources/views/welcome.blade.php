@@ -126,7 +126,7 @@
                     </form>
                 </div>
                 <div class="title m-b-md">
-                    Not delivered messaged in the last 24 hours
+                    Not delivered messages in the last 24 hours
                 </div>
 
                 <table id="myTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
