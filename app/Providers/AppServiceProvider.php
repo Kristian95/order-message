@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Schema;
+use App\Repositories\MessageRepository;
+use App\Interfaces\MessageInterface;
+use App;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        App::bind(MessageInterface::class, MessageRepository::class);
+
         Schema::defaultStringLength(191);
     }
 }

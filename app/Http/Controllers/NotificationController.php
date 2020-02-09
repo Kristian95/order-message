@@ -5,12 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Message;
 use App\Restaurant;
-use Carbon\Carbon;
+use App\Interfaces\MessageInterface;
 use App\Jobs\SendNotifications;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
+	private $messageRepository;
+
+	public function __construct(MessageInterface $messageRepository)
+	{
+		$this->messageRepository = $messageRepository;
+	}
 	/**
      * Show the resources.
      *
@@ -18,18 +24,9 @@ class NotificationController extends Controller
    	 */
 	public function index(Request $request)
 	{
-		$messages = Message::limit(50)
-			->orderBy('created_at', 'ASC')
-			->get();
+		$messages = $this->messageRepository->getLastFiftyMessages();
 
-		$notDelivedMessages = Message::where('status', '<>', Message::$deliveredStatus)
-			->where('created_at', '>=', Carbon::now()->subDay());
-
-		if ($request->has('text')) {
-			$notDelivedMessages->where('text', 'like', '%' . $request->get('text') . '%');
-		}
-
-		$notDelivedMessages = $notDelivedMessages->get();
+		$notDelivedMessages = $this->messageRepository->getNotDelivedMessages($request);
 
 		return view('welcome', compact('messages', 'notDelivedMessages'));
 	}
