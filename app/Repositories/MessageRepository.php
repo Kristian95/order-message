@@ -29,4 +29,12 @@ class MessageRepository implements MessageInterface
 
 		return $notDelivedMessages;
 	}
+
+	public function store(string $message, int $status)
+	{
+		Message::create([
+			'text' => $message,
+			'status' => $status,
+		]);
+	}
 }

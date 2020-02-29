@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Message;
 use App\Restaurant;
 use Nexmo\Laravel\Facade\Nexmo;
+use App\Repositories\MessageRepository;
 
 class SendSMSNotificationService
 {
@@ -26,14 +27,6 @@ class SendSMSNotificationService
 		$response = $notifaction->getResponseData();
 		$status = $response['messages'][0]['status'];
 
-		$this->storeInDb($this->message, $status);
-	}
-
-	private function storeInDb(string $message, int $status)
-	{
-		Message::create([
-			'text' => $message,
-			'status' => $status,
-		]);
+		(new MessageRepository())->store($this->message, $status);
 	}
 }
